@@ -59,7 +59,6 @@ public:
 	array& operator = (const array& obj) {
 		if (this != &obj)
 		{
-			this->ptr = nullptr;
 			delete[] this->ptr;
 			if (this->size != obj.size)
 			{
@@ -74,7 +73,6 @@ public:
 		return *this;
 	}
 	~array() {
-		ptr = nullptr;
 		delete[] ptr;	
 	}
 };
