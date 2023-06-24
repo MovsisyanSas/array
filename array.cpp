@@ -49,8 +49,6 @@ public:
 		std::cout << std::endl;
 	}
 	array(const array& obj) {
-		this->ptr = nullptr;
-		delete[] this->ptr;
 		this->size = obj.size;
 		this->ptr = new int[size];
 		for (int i = 0; i < size; i++)
