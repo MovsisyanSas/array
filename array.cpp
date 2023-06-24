@@ -59,12 +59,13 @@ public:
 	array& operator = (const array& obj) {
 		if (this != &obj)
 		{
-			delete[] this->ptr;
 			if (this->size != obj.size)
 			{
+				delete[] this->ptr;
 				this->size = obj.size;
+				this->ptr = new int[size];
 			}
-			this->ptr = new int[size];
+			
 			for (int i = 0; i < size; i++)
 			{
 				this->ptr[i] = obj.ptr[i];
