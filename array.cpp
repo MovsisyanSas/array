@@ -61,8 +61,11 @@ public:
 		{
 			this->ptr = nullptr;
 			delete[] this->ptr;
-			this->size = obj.size;
-			this->ptr = obj.ptr;
+			if (this->size != obj.size)
+			{
+				this->size = obj.size;
+			}
+			this->ptr = new int[size];
 			for (int i = 0; i < size; i++)
 			{
 				this->ptr[i] = obj.ptr[i];
@@ -72,7 +75,7 @@ public:
 	}
 	~array() {
 		ptr = nullptr;
-		delete[] ptr;
+		delete[] ptr;	
 	}
 };
 
