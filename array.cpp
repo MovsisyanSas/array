@@ -59,19 +59,30 @@ public:
 	array& operator = (const array& obj) {
 		if (this != &obj)
 		{
+			delete[] this->ptr;
 			if (this->size != obj.size)
 			{
-				delete[] this->ptr;
 				this->size = obj.size;
-				this->ptr = new int[size];
 			}
-			
+			this->ptr = new int[size];
 			for (int i = 0; i < size; i++)
 			{
 				this->ptr[i] = obj.ptr[i];
 			}
 		}
 		return *this;
+	}
+	int& operator [] (int i) {
+		if (0 <= i < size)
+		{
+			return ptr[i];
+		}
+		else if(i >= size) {
+			std::cout << "Error: max size of array is: " << size << " last element: " << size - 1 << "so you can't get element: " << i << std::endl;
+		}
+		else {
+			std::cout << "Error: you cant get element less than 0" << std::endl;
+		}
 	}
 	~array() {
 		delete[] ptr;	
@@ -86,4 +97,5 @@ int main() {
 	arr2 = arr1;
 	arr2.print();
 	arr3.print();
+	std::cout << arr1[0] << std::endl;
 }
