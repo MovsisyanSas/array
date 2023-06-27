@@ -72,17 +72,8 @@ public:
 		}
 		return *this;
 	}
-	int& operator [] (int i) {
-		if (0 <= i < size)
-		{
+	int operator [] (int i) {
 			return ptr[i];
-		}
-		else if(i >= size) {
-			std::cout << "Error: max size of array is: " << size << " last element: " << size - 1 << "so you can't get element: " << i << std::endl;
-		}
-		else {
-			std::cout << "Error: you cant get element less than 0" << std::endl;
-		}
 	}
 	~array() {
 		delete[] ptr;	
