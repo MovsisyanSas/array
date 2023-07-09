@@ -25,29 +25,6 @@ public:
 			std::cout << "Error: array creation with 0 and less size is impossible" << std::endl;
 		}
 	}
-	int get_element(int element) {
-		if (element >= size)
-		{
-			std::cout << "Error: max size of array is: " << size << " last element: " << size - 1 << "so you can't get element: " << element << std::endl;
-			return {};
-		}
-		else if (element < 0) {
-			std::cout << "Error: you cant get element less than 0" << std::endl;
-			return {};
-		}
-		else {
-			return ptr[element];
-		}
-	}
-	void print() {
-		for (int i = 0; i < size; i++)
-		{
-			std::cout << ptr[i] << ' ' << std::endl;
-		}
-		std::cout << std::endl;
-		std::cout << ptr << std::endl;
-		std::cout << std::endl;
-	}
 	array(const array& obj) {
 		this->size = obj.size;
 		this->ptr = new int[size];
@@ -75,18 +52,57 @@ public:
 	int operator [] (int i) {
 			return ptr[i];
 	}
+	array(array&& obj) {
+		this->size = obj.size;
+		this->ptr = obj.ptr;
+		obj.size = 0;
+		obj.ptr = nullptr;
+		std::cout << "move constructor "<< std::endl;
+	}
+	array& operator = (array&& obj) {
+		if (this != &obj)
+		{
+			delete[] this->ptr;
+			this->ptr = obj.ptr;
+			this->size = obj.size;
+			obj.size = 0;
+			obj.ptr = nullptr;
+		}
+		std::cout << "move operator = " << std::endl;
+		return *this;
+	}
 	~array() {
 		delete[] ptr;	
 	}
+public:
+	int get_element(int element) {
+		if (element >= size)
+		{
+			std::cout << "Error: max size of array is: " << size << " last element: " << size - 1 << "so you can't get element: " << element << std::endl;
+			return {};
+		}
+		else if (element < 0) {
+			std::cout << "Error: you cant get element less than 0" << std::endl;
+			return {};
+		}
+		else {
+			return ptr[element];
+		}
+	}
+	void print() {
+		for (int i = 0; i < size; i++)
+		{
+			std::cout << ptr[i] << ' ' << std::endl;
+		}
+		std::cout << std::endl;
+		std::cout << ptr << std::endl;
+		std::cout << std::endl;
+	}	
 };
 
 int main() {
-	array arr1(5);
-	arr1.print();
-	array arr2(6);
-	array arr3(arr1);
-	arr2 = arr1;
-	arr2.print();
-	arr3.print();
-	std::cout << arr1[0] << std::endl;
+	array arr(2);
+	array arr1(std::move(arr));
+	array arr3(5);
+	arr3 = std::move(arr);
 }
