@@ -101,8 +101,7 @@ public:
 };
 
 int main() {
-	array arr(2);
-	array arr1(std::move(arr));
-	array arr3(5);
-	arr3 = std::move(arr);
+	array arr1(std::move(array(3)));
+	array arr2(5);
+	arr2 = std::move(array(3));
 }
