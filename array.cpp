@@ -1,7 +1,8 @@
 #include <iostream>
 
+template<typename T>
 class array {
-	int* ptr = nullptr;
+	T* ptr = nullptr;
 	int size = 0;
 	void fill() {
 		srand(time(0));
@@ -18,8 +19,8 @@ public:
 		if (Size >= 0)
 		{
 			size = Size;
-			ptr = new int[size];
-			fill();
+			ptr = new T[size];
+			//fill();
 		}
 		else {
 			std::cout << "Error: array creation with 0 and less size is impossible" << std::endl;
@@ -27,7 +28,7 @@ public:
 	}
 	array(const array& obj) {
 		this->size = obj.size;
-		this->ptr = new int[size];
+		this->ptr = new T[size];
 		for (int i = 0; i < size; i++)
 		{
 			this->ptr[i] = obj.ptr[i];
@@ -41,7 +42,7 @@ public:
 			{
 				this->size = obj.size;
 			}
-			this->ptr = new int[size];
+			this->ptr = new T[size];
 			for (int i = 0; i < size; i++)
 			{
 				this->ptr[i] = obj.ptr[i];
@@ -101,7 +102,6 @@ public:
 };
 
 int main() {
-	array arr1(std::move(array(3)));
-	array arr2(5);
-	arr2 = std::move(array(3));
+	array<int> arr(4);
+	array<double> arr2(4);
 }
