@@ -3,10 +3,10 @@
 template<typename T>
 class array {
 	T* ptr = nullptr;
-	int size = 0;
+	int Size = 0;
 	void fill() {
 		srand(time(0));
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < Size; i++)
 		{
 			ptr[i] = rand() % 10;
 		}
@@ -15,11 +15,11 @@ public:
 	array() {
 		std::cout << "Error: array creation with unknown size is impossible" << std::endl;
 	}
-	array(int Size) {
-		if (Size >= 0)
+	array(int S) {
+		if (S >= 0)
 		{
-			size = Size;
-			ptr = new T[size];
+			Size = S;
+			ptr = new T[Size];
 			//fill();
 		}
 		else {
@@ -27,9 +27,9 @@ public:
 		}
 	}
 	array(const array& obj) {
-		this->size = obj.size;
-		this->ptr = new T[size];
-		for (int i = 0; i < size; i++)
+		this->Size = obj.Size;
+		this->ptr = new T[Size];
+		for (int i = 0; i < Size; i++)
 		{
 			this->ptr[i] = obj.ptr[i];
 		}
@@ -38,12 +38,12 @@ public:
 		if (this != &obj)
 		{
 			delete[] this->ptr;
-			if (this->size != obj.size)
+			if (this->Size != obj.Size)
 			{
-				this->size = obj.size;
+				this->Size = obj.Size;
 			}
-			this->ptr = new T[size];
-			for (int i = 0; i < size; i++)
+			this->ptr = new T[Size];
+			for (int i = 0; i < Size; i++)
 			{
 				this->ptr[i] = obj.ptr[i];
 			}
@@ -51,35 +51,35 @@ public:
 		return *this;
 	}
 	int operator [] (int i) {
-			return ptr[i];
+		return ptr[i];
 	}
 	array(array&& obj) {
-		this->size = obj.size;
+		this->Size = obj.Size;
 		this->ptr = obj.ptr;
-		obj.size = 0;
+		obj.Size = 0;
 		obj.ptr = nullptr;
-		std::cout << "move constructor "<< std::endl;
+		std::cout << "move constructor " << std::endl;
 	}
 	array& operator = (array&& obj) {
 		if (this != &obj)
 		{
 			delete[] this->ptr;
 			this->ptr = obj.ptr;
-			this->size = obj.size;
-			obj.size = 0;
+			this->Size = obj.Size;
+			obj.Size = 0;
 			obj.ptr = nullptr;
 		}
 		std::cout << "move operator = " << std::endl;
 		return *this;
 	}
 	~array() {
-		delete[] ptr;	
+		delete[] ptr;
 	}
 public:
 	int get_element(int element) {
-		if (element >= size)
+		if (element >= Size)
 		{
-			std::cout << "Error: max size of array is: " << size << " last element: " << size - 1 << "so you can't get element: " << element << std::endl;
+			std::cout << "Error: max size of array is: " << Size << " last element: " << Size - 1 << "so you can't get element: " << element << std::endl;
 			return {};
 		}
 		else if (element < 0) {
@@ -91,17 +91,54 @@ public:
 		}
 	}
 	void print() {
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < Size; i++)
 		{
 			std::cout << ptr[i] << ' ' << std::endl;
 		}
 		std::cout << std::endl;
-		std::cout << ptr << std::endl;
-		std::cout << std::endl;
-	}	
+	}
+	int size() {
+		return Size;
+	}
+	void push_back(T obj) {
+		if (Size == 0) {
+			ptr = new T[1];
+			Size = 1;
+		}
+		else {
+			T* temp = new T[Size + 1];
+			for (int i = 0; i < Size; i++) {
+				temp[i] = ptr[i];
+			}
+			delete[] ptr;
+			ptr = temp;
+			Size++;
+		}
+		ptr[Size - 1] = obj;
+	}
+	void pop_back() {
+		if (Size > 0)
+		{
+			Size--;
+			T* temp = new T[Size];
+			for (int i = 0; i < Size; i++) {
+				temp[i] = ptr[i];
+			}
+			delete[] ptr;
+			ptr = temp;
+		}
+	}
 };
 
 int main() {
-	array<int> arr(4);
-	array<double> arr2(4);
+	array<int> arr(0);
+	arr.push_back(5);
+	arr.push_back(3);
+	arr.push_back(4);
+	arr.print();
+	std::cout << arr.size() << std::endl;
+	std::cout << std::endl;
+	arr.pop_back();
+	arr.print();
+	std::cout << arr.size() << std::endl;
 }
